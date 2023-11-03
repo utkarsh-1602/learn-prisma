@@ -59,8 +59,24 @@ async function main() {
         }
     })
 
+    //updating user preference
+    const updateUser3 = await prisma.user.update({
+        where: {
+            email: "iwillbehokage@gmail.com"
+        },
+        data: {
+            userPreference: {
+                create: {
+                    emailUpdates: true
+                }
+            }
+        }
+    })
+
+
     console.log(updateUser)
     console.log(updateUser2)
+    console.log(updateUser3)
 
 }
 main()
