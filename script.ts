@@ -38,72 +38,29 @@ async function main() {
     })
 
 
-    // Advance filtering
-    const findManyFields = await prisma.user.findMany({
+    const updateUser = await prisma.user.update({
         where: {
-            // name: { equals: "Utkarsh" },
-            name: { in: ["Utkarsh", "naruto"] }, // return all the users of given names            
+            email: "utkarsh@gmail.com"
         },
-
-    })
-
-    const findManyFields2 = await prisma.user.findMany({
-        where: {
-            // name: { equals: "Utkarsh" },
-            name: { notIn: ["Utkarsh"] }, // don't return the users of given names
-        },
-
-    })
-
-
-    const findManyFields3 = await prisma.user.findMany({
-        where: {
-            age: { lt: 30 } // age less than 20
-        },
-
-    })
-
-    const containsTheText = await prisma.user.findMany({
-        where: {
-            email: { contains: "@rediffmail.com" }, //checks if it contains the desired text in the given field
-            // you can also find the field values with "endsWith" or "startsWith"
-
-        }
-    })
-
-    //combining queries with AND operator
-    const combineQueries = await prisma.user.findMany({
-        where: {
-            AND: [
-                { email: { startsWith: "u" } },
-                { name: "Utkarsh" }
-            ],
-            OR: [
-                { age: { gt: 20 } },
-                { name: "naruto" }
-            ]
-        }
-    })
-
-    const combineQueries2 = await prisma.user.findMany({
-        where: {
-            OR: [
-                { age: { gt: 20 } },
-                { name: "naruto" }
-            ]
+        data: {
+            email: "utkarsh1@gmail.com"
         }
     })
 
 
-    console.log(users)
-    console.log(findManyFields.length)
-    console.log("findManyFields ===> ", findManyFields)
-    console.log("findManyFields2 ===> ", findManyFields2)
-    console.log("findManyFields3 ===> ", findManyFields3)
-    console.log("Contains text ===> ", containsTheText)
-    console.log("Combined Queries ====> ", combineQueries)
-    console.log("Combined Queries2 ====> ", combineQueries2)
+    const updateUser2 = await prisma.user.update({
+        where: {
+            email: "iwillbehokage@gmail.com"
+        },
+        data: {
+            age: {
+                increment: 1
+            }
+        }
+    })
 
+    console.log(updateUser)
+    console.log(updateUser2)
 
 }
 main()
