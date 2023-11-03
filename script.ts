@@ -10,6 +10,16 @@ async function main() {
             email: "utkarshuh16@gmail.com",
         },
         {
+            name: "Utkarsh",
+            age: 29,
+            email: "utkarsh@gmail.com",
+        },
+        {
+            name: "Utkarsh",
+            age: 44,
+            email: "version2@gmail.com",
+        },
+        {
             name: "naruto",
             age: 20,
             email: "iwillbehokage@gmail.com",
@@ -17,37 +27,27 @@ async function main() {
         ],
     })
 
-    // find the field by a unique constraint
-    const findField = await prisma.user.findUnique({
+    const findManyFields = await prisma.user.findMany({
         where: {
-            email: "utkarshuh16@gmail.com"
+            name: "Utkarsh",
+        },
+        // distinct: ["name"],
+        // here you are getting first 2 users
+        take: 2,
+        // if you want to skip the 1st user, and return next 2 users, use skip
+        skip: 1,
+        // user orderby to get users by defined fields
+        orderBy: {
+            age: "desc" // descending
         }
+
     })
 
-    // Find the field by multiple unique constraints 
-    // in the schema.prisma we've defined a unique constraint for multiple fields [age, name]
-    const findMultipleFields = await prisma.user.findUnique({
-        where: {
-            age_name: {
-                age: 21,
-                name: "Utkarsh"
-            }
-        }
-    })
-
-
-    const findAnyField = await prisma.user.findFirst({
-        where: {
-            name: "Utkarsh"
-        }
-    })
 
     console.log(users)
-    console.log(findField)
-    console.log(findMultipleFields)
-    console.log(findAnyField)
-}
+    console.log(findManyFields)
 
+}
 main()
     .catch(e => {
         console.error(e.message)
