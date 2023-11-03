@@ -37,30 +37,8 @@ async function main() {
         ],
     })
 
-
+    // updating user preference
     const updateUser = await prisma.user.update({
-        where: {
-            email: "utkarsh@gmail.com"
-        },
-        data: {
-            email: "utkarsh1@gmail.com"
-        }
-    })
-
-
-    const updateUser2 = await prisma.user.update({
-        where: {
-            email: "iwillbehokage@gmail.com"
-        },
-        data: {
-            age: {
-                increment: 1
-            }
-        }
-    })
-
-    //updating user preference
-    const updateUser3 = await prisma.user.update({
         where: {
             email: "iwillbehokage@gmail.com"
         },
@@ -73,10 +51,45 @@ async function main() {
         }
     })
 
+    // connect user with specific preferenceId
+    const connectUser = await prisma.user.update({
+        where: {
+            email: "utkarsh@gmail.com"
+        },
+        data: {
+            userPreference: {
+                connect: {
+                    id: "de3d92b1-ce4a-4f4b-9969-68268f1ebe48"
+                }
+            }
+        }
+    })
 
-    console.log(updateUser)
-    console.log(updateUser2)
-    console.log(updateUser3)
+    // disconnect user with specific preferenceId
+
+    const disconnectUser = await prisma.user.update({
+        where: {
+            email: "utkarsh@gmail.com"
+        },
+        data: {
+            userPreference: {
+                disconnect: {
+                    id: "de3d92b1-ce4a-4f4b-9969-68268f1ebe48"
+                }
+            }
+        }
+    })
+
+    console.log("Update User ===> ", updateUser)
+    console.log("Connect User ===> ", connectUser)
+    console.log("Disconnect User ===> ", disconnectUser)
+
+
+
+    // Delete Operations  
+    // const user = await prisma.user.delete
+    // const user = await prisma.user.deleteMany
+
 
 }
 main()
